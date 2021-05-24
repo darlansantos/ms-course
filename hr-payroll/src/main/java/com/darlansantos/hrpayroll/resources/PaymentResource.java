@@ -12,8 +12,8 @@ import com.darlansantos.hrpayroll.services.PaymentService;
 
 @RestController
 @RequestMapping(value = "/payments")
-public class PaymentResources {
-	
+public class PaymentResource {
+
 	@Autowired
 	private PaymentService paymentService;
 	
@@ -21,6 +21,12 @@ public class PaymentResources {
 	public ResponseEntity<Payment> getPayment(@PathVariable Long workerId, @PathVariable Integer days) {
 		Payment payment = paymentService.getPayment(workerId, days);
 		return ResponseEntity.ok(payment);
-	}
-
+	}	
 }
+
+
+
+
+
+
+

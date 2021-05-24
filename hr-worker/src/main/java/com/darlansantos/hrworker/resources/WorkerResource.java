@@ -13,9 +13,9 @@ import com.darlansantos.hrworker.entities.Worker;
 import com.darlansantos.hrworker.repositories.WorkerRepository;
 
 @RestController
-@RequestMapping(value = "/workes")
+@RequestMapping(value = "/workers")
 public class WorkerResource {
-	
+
 	@Autowired
 	private WorkerRepository workerRepository;
 	
@@ -23,12 +23,11 @@ public class WorkerResource {
 	public ResponseEntity<List<Worker>> findAll() {
 		List<Worker> list = workerRepository.findAll();
 		return ResponseEntity.ok(list);
-	}
+	}	
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Worker> findById(@PathVariable Long id) {
 		Worker obj = workerRepository.findById(id).get();
 		return ResponseEntity.ok(obj);
-	}
-
+	}	
 }
