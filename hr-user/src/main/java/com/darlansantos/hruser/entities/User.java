@@ -1,33 +1,46 @@
-package com.darlansantos.hrworker.entities;
+package com.darlansantos.hruser.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tb_worker")
-public class Worker implements Serializable {
-	
+@Table(name = "tb_user")
+public class User implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
-	private Double dailyIncome;
 	
-	public Worker() {
-	}
+	private String name;
+	private String email;
+	private String password;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "tb_user_role",
+			   joinColumns = @JoinColumn(name = "user_id"),
+			   inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet<>();
+	
+	public User() {}
 
-	public Worker(Long id, String name, Double dailyIncome) {
-		super();
+	public User(Long id, String name, String email, String password) {
 		this.id = id;
 		this.name = name;
-		this.dailyIncome = dailyIncome;
+		this.email = email;
+		this.password = password;
 	}
 
 	public Long getId() {
@@ -46,12 +59,24 @@ public class Worker implements Serializable {
 		this.name = name;
 	}
 
-	public Double getDailyIncome() {
-		return dailyIncome;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setDailyIncome(Double dailyIncome) {
-		this.dailyIncome = dailyIncome;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
 	}
 
 	@Override
@@ -70,7 +95,7 @@ public class Worker implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Worker other = (Worker) obj;
+		User other = (User) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -78,4 +103,5 @@ public class Worker implements Serializable {
 			return false;
 		return true;
 	}
+	
 }
